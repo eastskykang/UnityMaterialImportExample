@@ -30,7 +30,7 @@ namespace UnityMeshImportExample.MaterialImporter
 {
     public class MaterialImporter
     {
-        public static Material Load(string albedoPath="", string normalPath="", string roughnessPath="", string metallicPath="", string heightPath="")
+        public static Material Load(string albedoPath="", string normalPath="", string roughnessPath="", string metallicPath="", string heightPath="", string occlusionPath="")
         {
             var mat = new Material(Shader.Find("Standard"));
 
@@ -64,6 +64,18 @@ namespace UnityMeshImportExample.MaterialImporter
                 height = new Texture2D(2,2);
                 byte[] byteArray = File.ReadAllBytes(heightPath);
                 bool isLoaded = height.LoadImage(byteArray);
+                if (!isLoaded)
+                {
+                    throw new Exception("Cannot find texture file: " + heightPath);
+                }
+            }
+
+            Texture2D occlusion = null;
+            if (!string.IsNullOrEmpty(occlusionPath))
+            {
+                occlusion = new Texture2D(2,2);
+                byte[] byteArray = File.ReadAllBytes(occlusionPath);
+                bool isLoaded = occlusion.LoadImage(byteArray);
                 if (!isLoaded)
                 {
                     throw new Exception("Cannot find texture file: " + heightPath);
@@ -118,6 +130,13 @@ namespace UnityMeshImportExample.MaterialImporter
             {
                 mat.EnableKeyword("_PARALLAXMAP");
                 mat.SetTexture("_ParallaxMap", height);
+            }
+            
+            // Occlusion 
+            if (occlusion != null)
+            {
+                mat.EnableKeyword("_OCCLUSIONMAP");
+                mat.SetTexture("_OcclusionMap", occlusion);
             }
             
             // Metallic and Roughness

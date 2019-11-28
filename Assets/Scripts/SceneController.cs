@@ -97,7 +97,8 @@ namespace UnityMeshImportExample
                 "/home/donghok/Workspace/unity/UnityMaterialImportExample/Examples/Rocks02/Rocks02_nrm.jpg",
                 "/home/donghok/Workspace/unity/UnityMaterialImportExample/Examples/Rocks02/Rocks02_rgh.jpg",
                 "",
-                "/home/donghok/Workspace/unity/UnityMaterialImportExample/Examples/Rocks02/Rocks02_disp.jpg"
+                "/home/donghok/Workspace/unity/UnityMaterialImportExample/Examples/Rocks02/Rocks02_disp.jpg",
+                "/home/donghok/Workspace/unity/UnityMaterialImportExample/Examples/Rocks02/Rocks02_AO.jpg"
             );
 
             var sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
