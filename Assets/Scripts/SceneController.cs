@@ -38,6 +38,9 @@ namespace UnityMeshImportExample
         private GameObject _loadCanvas;
         private GameObject _errorCanvas;
         private GameObject _errorText;
+        
+        // Material
+        private Material _material;
 
         public SceneController()
         {
@@ -52,6 +55,9 @@ namespace UnityMeshImportExample
             _loadCanvas = GameObject.Find("LoadCanvas");
             _errorCanvas = GameObject.Find("ErrorCanvas");
             _errorText = GameObject.Find("ErrorText");
+            
+            // Material 
+            _material = null;
 
             var loadButton = GameObject.Find("LoadButton").GetComponent<Button>();
             loadButton.onClick.AddListener(() =>
@@ -62,8 +68,6 @@ namespace UnityMeshImportExample
                 {
                     try
                     {
-//                        var ob = MeshImporter.Load(path, _meshScale, _meshScale, _meshScale);
-//                        ob.transform.SetParent(_root.transform, false);
                     }
                     catch (Exception e)
                     {
@@ -87,6 +91,17 @@ namespace UnityMeshImportExample
         {
             _loadCanvas.GetComponent<Canvas>().enabled = true;
             _errorCanvas.GetComponent<Canvas>().enabled = false;
+            
+            _material = MaterialImporter.MaterialImporter.Load(
+                "/home/donghok/Workspace/unity/UnityMaterialImportExample/Examples/Rocks02/Rocks02_col.jpg",
+                "/home/donghok/Workspace/unity/UnityMaterialImportExample/Examples/Rocks02/Rocks02_nrm.jpg",
+                "/home/donghok/Workspace/unity/UnityMaterialImportExample/Examples/Rocks02/Rocks02_rgh.jpg",
+                "",
+                "/home/donghok/Workspace/unity/UnityMaterialImportExample/Examples/Rocks02/Rocks02_disp.jpg"
+            );
+
+            var sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            sphere.GetComponent<Renderer>().material = _material;
         }
         
         void Clear()
